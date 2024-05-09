@@ -13,7 +13,7 @@ A Swift library to manage easy caching and retrieval of data from URLs with supp
 
 ## Installation
 
-### Using Swift Package Manager:
+### Swift Package Manager using Xcode
 
 To integrate SwiftStrideIO into your Xcode project using Swift Package Manager, follow these steps:
 
@@ -77,14 +77,14 @@ To use SwiftStrideIO in your project, you will typically follow these steps:
 
 4. **Fetching Data:**
 
-    To retrieve data using string url (server/local), use the `getData` method:
+    To retrieve data using url (server/local), use the `getData` method:
    
     ```swift
     SwiftStrideIO.shared.getData(from: someURL) { (data, localUrl) in
         // Process the fetched data
     }
     ```
-    Alternatively you can use a string url  with optional base url string parameter
+    Alternatively you can use a string url with optional base url string parameter
     ```swift
     SwiftStrideIO.shared.getData(with: "path/or/url", baseUrlString: "optional/baseUrl") { (data, localUrl) in
         // Process the fetched data
