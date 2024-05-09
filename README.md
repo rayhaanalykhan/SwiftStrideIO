@@ -9,11 +9,11 @@ A Swift library to manage easy caching and retrieval of data from URLs with supp
 - Customizable encryption for cache keys using SHA1 or SHA256
 - Fetch data with ease, regardless of whether the URL points to a local or remote resource
 - Automatically cache data while retrieving data from server
-- Easily cache and retrieve data using your own (unique) identifier instead of a URL
+- Option to cache and retrieve data using your own (unique) identifier.
 
 ## Installation
 
-### Swift Package Manager using Xcode
+### Swift Package Manager (SPM) using Xcode
 
 To integrate SwiftStrideIO into your Xcode project using Swift Package Manager, follow these steps:
 
@@ -23,7 +23,7 @@ To integrate SwiftStrideIO into your Xcode project using Swift Package Manager, 
 4. Follow the on-screen instructions to choose the package options and the version you want to integrate.
 5. Once completed, Xcode will download the package and add it to your project navigator.
 
-By installing SwiftStrideIO through Swift Package Manager (SPM), you will also automatically resolve dependencies such as the CipherEncryption library used by this package.
+By installing SwiftStrideIO using above instructions, you will also automatically resolve dependencies such as the CipherEncryption library used by this package.
 
 ## Usage
 
@@ -54,8 +54,11 @@ To use SwiftStrideIO in your project, you will typically follow these steps:
 
     ```swift
     SwiftStrideIO.shared.cacheData(data: someData, cacheKey: "someKey")
+    ```
+    Handle cache url if needed
 
-    SwiftStrideIO.shared.cacheData(data: someData, cacheKey: someKey) { cacheUrl in }
+    ```swift
+    SwiftStrideIO.shared.cacheData(data: someData, cacheKey: "someKey") { cacheUrl in }
     ```
 
 3. **Retrieving Cached Data:**
@@ -70,14 +73,14 @@ To use SwiftStrideIO in your project, you will typically follow these steps:
     Or use a cache key to retrieve data
 
     ```swift
-    SwiftStrideIO.shared.getCachedData(cacheKey: someKey) { (data, cacheUrl) in
+    SwiftStrideIO.shared.getCachedData(cacheKey: "someKey") { (data, cacheUrl) in
         // Use the retrieved data from cache or use/pass cache url
     }
     ```
 
 4. **Fetching Data:**
 
-    To retrieve data using url (server/local), use the `getData` method:
+    To retrieve from a local URL or to retrieve and cache data from server url, use the `getData` method:
    
     ```swift
     SwiftStrideIO.shared.getData(from: someURL) { (data, localUrl) in
