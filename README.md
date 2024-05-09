@@ -80,7 +80,7 @@ To use SwiftStrideIO in your project, you will typically follow these steps:
 
 4. **Fetching Data:**
 
-    To retrieve from a local URL or to retrieve and cache data from server url, use the `getData` method:
+    To retrieve data from a local URL or to retrieve and cache data from server url, use the `getData` method:
    
     ```swift
     SwiftStrideIO.shared.getData(from: someURL) { (data, localUrl) in

@@ -1,7 +1,9 @@
 // swift-tools-version: 5.10
+// 
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-
+//
 // This file is part of SwiftStrideIO. For licensing information, see the LICENSE file.
+//
 
 import PackageDescription
 

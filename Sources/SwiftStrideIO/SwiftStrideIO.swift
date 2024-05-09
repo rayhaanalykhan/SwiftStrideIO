@@ -1,8 +1,9 @@
-//  This file is part of SwiftStrideIO. For licensing information, see the LICENSE file.
+//
 //  SwiftStrideIO.swift
 //
-//
 //  Created by rayhaanalykhan on 09/05/2024.
+//
+//  This file is part of SwiftStrideIO. For licensing information, see the LICENSE file.
 //
 
 import Foundation

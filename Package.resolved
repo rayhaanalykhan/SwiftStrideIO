@@ -1,0 +1,15 @@
+{
+  "originHash" : "ce90c27f42b281c599038ea44e7524d9d058f6975180b0eab53b21c7a2b4191e",
+  "pins" : [
+    {
+      "identity" : "cipherencryption",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rayhaanalykhan/CipherEncryption.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "df950cff2c1dbc364928b0b3c1df21aaef035dc8"
+      }
+    }
+  ],
+  "version" : 3
+}
