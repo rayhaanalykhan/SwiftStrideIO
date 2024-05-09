@@ -16,14 +16,7 @@ public class SwiftStrideIO {
     public static let shared = SwiftStrideIO()
     
     // Defines the default encryption method to create cache keys for the stored data.
-    public var defaultKeyEncryption: KeyEncryption = .sha1
-    
-    // Enum defining the different types of encryption methods available for cache keys.
-    public enum KeyEncryption {
-        
-        case sha1
-        case sha256
-    }
+    public var defaultKeyEncryption: String.Encryption = .SHA1
     
     /// Cache data asynchronously to the disk by generating a cache key from a URL.
     /// - Parameters:
@@ -31,10 +24,13 @@ public class SwiftStrideIO {
     ///   - url: The URL from where the data was fetched.
     ///   - keyEncryption: The type of encryption for creating the cache key (default is sha1).
     ///   - completion: Optional closure called with the cached URL if successful.
-    public func cacheData(data: Data?, url: URL, keyEncryption: KeyEncryption = shared.defaultKeyEncryption, completion: ((_ cacheUrl: URL?) -> Void)? = nil) {
+    public func cacheData(data: Data?, url: URL, keyEncryption: String.Encryption = shared.defaultKeyEncryption, completion: ((_ cacheUrl: URL?) -> Void)? = nil) {
         
         // Generates a unique cache key using the URL and encryption type.
-        let cacheKey = generateCacheKey(from: url, keyEncryption: keyEncryption)
+        guard let cacheKey = url.absoluteString.encrypt(keyEncryption) else {
+            completion?(nil)
+            return
+        }
         // Cache the data using the generated key and call the completion handler.
         cacheData(data: data, cacheKey: cacheKey + "." + url.pathExtension, completion: completion)
     }
@@ -76,10 +72,13 @@ public class SwiftStrideIO {
     ///   - url: Original URL the data was associated with.
     ///   - encryptionType: Encryption type the cache key was generated with (default is sha1).
     ///   - completion: Closure called with the data and cached URL if retrieval is successful.
-    public func getCachedData(from url: URL, keyEncryption: KeyEncryption = shared.defaultKeyEncryption, completion: @escaping (_ data: Data?, _ cacheUrl: URL?) -> Void) {
+    public func getCachedData(from url: URL, keyEncryption: String.Encryption = shared.defaultKeyEncryption, completion: @escaping (_ data: Data?, _ cacheUrl: URL?) -> Void) {
         
         // Generate a key for looking up the cached data.
-        let cacheKey = generateCacheKey(from: url, keyEncryption: keyEncryption)
+        guard let cacheKey = url.absoluteString.encrypt(keyEncryption) else {
+            completion(nil, nil)
+            return
+        }
         // Retrieve cached data using the generated cache key and original file extension.
         getCachedData(cacheKey: cacheKey + "." + url.pathExtension, completion: completion)
     }
@@ -199,26 +198,6 @@ public class SwiftStrideIO {
                 
                 completion(nil)
             }
-        }
-    }
-    
-    private func generateCacheKey(from url: URL, keyEncryption: KeyEncryption) -> String {
-        
-        // Concatenate the URL's absolute string with the encryption method's raw value
-        let urlString = url.absoluteString
-        
-        // Generate and return the cache key based on the selected encryption type
-        switch keyEncryption {
-            
-        case .sha1:
-            
-            // Use the SHA1 hash computed property from CipherEncryption Package
-            return urlString.ce.sha1
-            
-        case .sha256:
-            
-            // Use the SHA1 hash computed property from CipherEncryption Package
-            return urlString.ce.sha256
         }
     }
 }
