@@ -34,7 +34,7 @@ To use SwiftStrideIO in your project, you will typically follow these steps:
     Set a default encryption type for key using as follows:
 
     ```swift
-    SwiftStrideIO.shared.defaultKeyEncryption = .sha1
+    SwiftStrideIO.shared.defaultKeyEncryption = .SHA1
     ```
 
 2. **Caching Data:**
