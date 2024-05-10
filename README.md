@@ -6,7 +6,7 @@ A Swift library to manage easy caching and retrieval of data from URLs with supp
 
 - Easy access throughout your project via a unified interface
 - Asyncronous data caching and retrieval
-- Customizable encryption for cache keys using SHA1 or SHA256
+- Customizable encryption for cache keys using various encryption algorithm provided by [CipherEncryption](https://github.com/rayhaanalykhan/CipherEncryption).
 - Fetch data with ease, regardless of whether the URL points to a local or remote resource
 - Automatically cache data while retrieving data from server
 - Option to cache and retrieve data using your own (unique) identifier.
@@ -23,7 +23,7 @@ To integrate SwiftStrideIO into your Xcode project using Swift Package Manager, 
 4. Follow the on-screen instructions to choose the package options and the version you want to integrate.
 5. Once completed, Xcode will download the package and add it to your project navigator.
 
-By installing SwiftStrideIO using above instructions, you will also automatically resolve dependencies such as the CipherEncryption library used by this package.
+By installing SwiftStrideIO using above instructions, you will also automatically resolve [CipherEncryption](https://github.com/rayhaanalykhan/CipherEncryption) dependency used by this package.
 
 ## Usage
 
