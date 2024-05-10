@@ -6,7 +6,7 @@ A Swift library to manage easy caching and retrieval of data from URLs with supp
 
 - Easy access throughout your project via a unified interface
 - Asyncronous data caching and retrieval
-- Customizable encryption for cache keys using various encryption algorithm provided by [CipherEncryption](https://github.com/rayhaanalykhan/CipherEncryption/blob/main/README.md#algorithms-list).
+- Customizable encryption for cache keys using various encryption [algorithms](https://github.com/rayhaanalykhan/CipherEncryption/blob/main/README.md#algorithms-list) provided by [CipherEncryption](https://github.com/rayhaanalykhan/CipherEncryption).
 - Fetch data with ease, regardless of whether the URL points to a local or remote resource
 - Automatically cache data while retrieving data from server
 - Option to cache and retrieve data using your own (unique) identifier.
