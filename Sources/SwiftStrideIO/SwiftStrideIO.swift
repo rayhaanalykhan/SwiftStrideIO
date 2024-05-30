@@ -12,11 +12,10 @@ import CipherEncryption
 /// `SwiftStrideIO` is a class designed for caching and retrieving data from a URL.
 public class SwiftStrideIO {
     
-    // Singleton instance of SwiftStrideIO to be used throughout the application.
-    public static let shared = SwiftStrideIO()
+    private init() { }
     
     // Defines the default encryption method to create cache keys for the stored data.
-    public var defaultKeyEncryption: String.Encryption = .SHA1
+    public static var defaultKeyEncryption: String.Encryption = .SHA1
     
     /// Cache data asynchronously to the disk by generating a cache key from a URL.
     /// - Parameters:
@@ -24,7 +23,7 @@ public class SwiftStrideIO {
     ///   - url: The URL from where the data was fetched.
     ///   - keyEncryption: The type of encryption for creating the cache key (default is sha1).
     ///   - completion: Optional closure called with the cached URL if successful.
-    public func cacheData(data: Data?, url: URL, keyEncryption: String.Encryption = shared.defaultKeyEncryption, completion: ((_ cacheUrl: URL?) -> Void)? = nil) {
+    public static func cacheData(data: Data?, url: URL, keyEncryption: String.Encryption = defaultKeyEncryption, completion: ((_ cacheUrl: URL?) -> Void)? = nil) {
         
         // Generates a unique cache key using the URL and encryption type.
         guard let cacheKey = url.absoluteString.encrypt(keyEncryption) else {
@@ -40,7 +39,7 @@ public class SwiftStrideIO {
     ///   - data: Data to be cached.
     ///   - cacheKey: Unique identifier for the data being cached.
     ///   - completion: Optional closure called with the cached URL if successful.
-    public func cacheData(data: Data?, cacheKey: String, completion: ((_ cacheUrl: URL?) -> Void)? = nil) {
+    public static func cacheData(data: Data?, cacheKey: String, completion: ((_ cacheUrl: URL?) -> Void)? = nil) {
         
         guard let data = data else {
             completion?(nil)
@@ -72,7 +71,7 @@ public class SwiftStrideIO {
     ///   - url: Original URL the data was associated with.
     ///   - encryptionType: Encryption type the cache key was generated with (default is sha1).
     ///   - completion: Closure called with the data and cached URL if retrieval is successful.
-    public func getCachedData(from url: URL, keyEncryption: String.Encryption = shared.defaultKeyEncryption, completion: @escaping (_ data: Data?, _ cacheUrl: URL?) -> Void) {
+    public static func getCachedData(from url: URL, keyEncryption: String.Encryption = defaultKeyEncryption, completion: @escaping (_ data: Data?, _ cacheUrl: URL?) -> Void) {
         
         // Generate a key for looking up the cached data.
         guard let cacheKey = url.absoluteString.encrypt(keyEncryption) else {
@@ -87,7 +86,7 @@ public class SwiftStrideIO {
     /// - Parameters:
     ///   - cacheKey: The cache key associated to the data.
     ///   - completion: Closure called with the data and cached URL if retrieval is successful.
-    public func getCachedData(cacheKey: String, completion: @escaping (_ data: Data?, _ cacheUrl: URL?) -> Void) {
+    public static func getCachedData(cacheKey: String, completion: @escaping (_ data: Data?, _ cacheUrl: URL?) -> Void) {
         
         DispatchQueue.global(qos: .background).async {
             
@@ -117,7 +116,7 @@ public class SwiftStrideIO {
     ///   - urlString: The URL string of the data to fetch.
     ///   - baseUrlString: Optional base URL to be combined with urlString.
     ///   - completion: Closure called with the data and file URL if retrieval is successful.
-    public func getData(with urlString: String?, baseUrlString: String?, completion: @escaping (_ data: Data?, _ localUrl: URL?) -> Void) {
+    public static func getData(with urlString: String?, baseUrlString: String?, completion: @escaping (_ data: Data?, _ localUrl: URL?) -> Void) {
         
         guard let urlString else {
             completion(nil, nil)
@@ -139,7 +138,7 @@ public class SwiftStrideIO {
     ///   - url: Server or local url
     ///   - baseUrlString: Optional base URL to be combined with urlString.
     ///   - completion: Closure called with the data and file URL if retrieval is successful.
-    public func getData(from url: URL, completion: @escaping (_ data: Data?, _ localUrl: URL?) -> Void) {
+    public static func getData(from url: URL, completion: @escaping (_ data: Data?, _ localUrl: URL?) -> Void) {
         
         if url.isFileURL {
             
@@ -180,7 +179,7 @@ public class SwiftStrideIO {
     }
     
     // The 'getLocalData' method is private to restrict its use within the class, because our 'getData' function retreives data from local url as well as server url, so we don't have to worry about url type.
-    private func getLocalData(from url: URL, completion: @escaping (_ data: Data?) -> Void) {
+    private static func getLocalData(from url: URL, completion: @escaping (_ data: Data?) -> Void) {
         
         DispatchQueue.global(qos: .background).async {
             

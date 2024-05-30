@@ -34,7 +34,7 @@ To use SwiftStrideIO in your project, you will typically follow these steps:
     Set a default encryption type for key using as follows:
 
     ```swift
-    SwiftStrideIO.shared.defaultKeyEncryption = .SHA1
+    SwiftStrideIO.defaultKeyEncryption = .SHA1
     ```
 
 2. **Caching Data:**
@@ -42,23 +42,23 @@ To use SwiftStrideIO in your project, you will typically follow these steps:
     To cache data from a URL, use the `cacheData` method:
 
     ```swift
-    SwiftStrideIO.shared.cacheData(data: someData, url: someURL)
+    SwiftStrideIO.cacheData(data: someData, url: someURL)
     ```
     Handle cache url if needed
 
     ```swift
-    SwiftStrideIO.shared.cacheData(data: someData, url: someURL) { cacheUrl in }
+    SwiftStrideIO.cacheData(data: someData, url: someURL) { cacheUrl in }
     ```
 
     Similary cache data using your own key
 
     ```swift
-    SwiftStrideIO.shared.cacheData(data: someData, cacheKey: "someKey")
+    SwiftStrideIO.cacheData(data: someData, cacheKey: "someKey")
     ```
     Handle cache url if needed
 
     ```swift
-    SwiftStrideIO.shared.cacheData(data: someData, cacheKey: "someKey") { cacheUrl in }
+    SwiftStrideIO.cacheData(data: someData, cacheKey: "someKey") { cacheUrl in }
     ```
 
 3. **Retrieving Cached Data:**
@@ -66,14 +66,14 @@ To use SwiftStrideIO in your project, you will typically follow these steps:
     To retrieve data from cache , use the `getCachedData` method:
 
     ```swift
-    SwiftStrideIO.shared.getCachedData(from: someURL) { (data, cacheUrl) in
+    SwiftStrideIO.getCachedData(from: someURL) { (data, cacheUrl) in
         // Use the retrieved data from cache or use/pass cache url
     }
     ```
     Or use a cache key to retrieve data
 
     ```swift
-    SwiftStrideIO.shared.getCachedData(cacheKey: "someKey") { (data, cacheUrl) in
+    SwiftStrideIO.getCachedData(cacheKey: "someKey") { (data, cacheUrl) in
         // Use the retrieved data from cache or use/pass cache url
     }
     ```
@@ -83,13 +83,13 @@ To use SwiftStrideIO in your project, you will typically follow these steps:
     To retrieve data from a local URL or to retrieve and cache data from server url, use the `getData` method:
    
     ```swift
-    SwiftStrideIO.shared.getData(from: someURL) { (data, localUrl) in
+    SwiftStrideIO.getData(from: someURL) { (data, localUrl) in
         // Process the fetched data
     }
     ```
     Alternatively you can use a string url with optional base url string parameter
     ```swift
-    SwiftStrideIO.shared.getData(with: "path/or/url", baseUrlString: "optional/baseUrl") { (data, localUrl) in
+    SwiftStrideIO.getData(with: "path/or/url", baseUrlString: "optional/baseUrl") { (data, localUrl) in
         // Process the fetched data
     }
     ```
