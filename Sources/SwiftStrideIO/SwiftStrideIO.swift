@@ -9,7 +9,6 @@
 import Foundation
 import CipherEncryption
 
-/// `SwiftStrideIO` is a class designed for caching and retrieving data from a URL.
 public class SwiftStrideIO {
     
     private init() { }
