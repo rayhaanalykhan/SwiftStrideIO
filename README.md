@@ -1,14 +1,14 @@
 # SwiftStrideIO
 
-A Swift library to manage easy caching and retrieval of data from URLs with support for custom key encryption strategies.
+A Swift library for easy caching and retrieval of data from URLs, featuring automatic caching and support for custom key encryption strategies.
 
 ## Features
 
-- Easy access throughout your project via a unified interface
-- Asyncronous data caching and retrieval
+- Easy access throughout your project via a unified interface.
+- Asyncronous data caching and retrieval.
 - Customizable encryption for cache keys using various encryption [algorithms](https://github.com/rayhaanalykhan/CipherEncryption/blob/main/README.md#algorithms-list) provided by [CipherEncryption](https://github.com/rayhaanalykhan/CipherEncryption).
-- Fetch data with ease, regardless of whether the URL points to a local or remote resource
-- Automatically cache data while retrieving data from server
+- Fetch data with ease, regardless of whether the URL points to a local or remote resource.
+- Automatically cache data while retrieving data from server.
 - Option to cache and retrieve data using your own (unique) identifier.
 
 ## Installation
@@ -27,7 +27,7 @@ By installing SwiftStrideIO using above instructions, you will also automaticall
 
 ## Usage
 
-To use SwiftStrideIO in your project, you will typically follow these steps:
+To use SwiftStrideIO in your project, you can call its static methods directly:
 
 1. **Default Encryption for Key:**
 
@@ -80,7 +80,7 @@ To use SwiftStrideIO in your project, you will typically follow these steps:
 
 4. **Fetching Data:**
 
-    To retrieve data from a local URL or to retrieve and cache data from server url, use the `getData` method:
+    To retrieve data from a local URL or to <strong>retrieve and cache data</strong> from server url, use the `getData` method:
    
     ```swift
     SwiftStrideIO.getData(from: someURL) { (data, localUrl) in
@@ -105,4 +105,4 @@ Contributors are welcomed to fork the project and submit pull requests. Please i
 
 ## Contact
 
-For further information, contact rayhaanalykhan at their [GitHub profile](https://github.com/rayhaanalykhan).
+For further information, contact me via email [rayhaanalykhan@gmail.com](mailto:rayhaanalykhan@gmail.com).
