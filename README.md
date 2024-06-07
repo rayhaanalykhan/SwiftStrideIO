@@ -42,31 +42,35 @@ To use SwiftStrideIO in your project, you can call its static methods directly:
     To cache data from a URL, use the `cacheData` method:
 
     ```swift
-    SwiftStrideIO.cacheData(data: someData, url: someURL)
+    // replace Data() with your Data
+    SwiftStrideIO.cacheData(data: Data(), url: URL(string: "https://www.someurl.com/dummy")!)
     ```
     Handle cache url if needed
 
     ```swift
-    SwiftStrideIO.cacheData(data: someData, url: someURL) { cacheUrl in }
+    // replace Data() with your Data
+    SwiftStrideIO.cacheData(data: Data(), url: URL(string: "https://www.someurl.com/dummy")!) { cacheUrl in }
     ```
 
     Similary cache data using your own key
 
     ```swift
-    SwiftStrideIO.cacheData(data: someData, cacheKey: "someKey")
+    // replace Data() with your Data
+    SwiftStrideIO.cacheData(data: Data(), cacheKey: "someKey")
     ```
     Handle cache url if needed
 
     ```swift
-    SwiftStrideIO.cacheData(data: someData, cacheKey: "someKey") { cacheUrl in }
+    // replace Data() with your Data
+    SwiftStrideIO.cacheData(data: Data(), cacheKey: "someKey") { cacheUrl in }
     ```
 
 3. **Retrieving Cached Data:**
 
-    To retrieve data from cache , use the `getCachedData` method:
+    To retrieve data from cache, use the `getCachedData` method:
 
     ```swift
-    SwiftStrideIO.getCachedData(from: someURL) { (data, cacheUrl) in
+    SwiftStrideIO.getCachedData(from: URL(string: "https://www.someurl.com/dummy")!) { (data, cacheUrl) in
         // Use the retrieved data from cache or use/pass cache url
     }
     ```
@@ -83,7 +87,7 @@ To use SwiftStrideIO in your project, you can call its static methods directly:
     To retrieve data from a local URL or to <strong>retrieve and cache data</strong> from server url, use the `getData` method:
    
     ```swift
-    SwiftStrideIO.getData(from: someURL) { (data, localUrl) in
+    SwiftStrideIO.getData(from: URL(string: "https://www.someurl.com/dummy")!) { (data, localUrl) in
         // Process the fetched data
     }
     ```
