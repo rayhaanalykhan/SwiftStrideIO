@@ -1,5 +1,4 @@
 {
-  "originHash" : "9dba76ff43a2af5b1942aa1798da8e4f2ff6ca35f3c23c3fe82736630be594cf",
   "pins" : [
     {
       "identity" : "cipherencryption",
@@ -7,9 +6,9 @@
       "location" : "https://github.com/rayhaanalykhan/CipherEncryption.git",
       "state" : {
         "branch" : "main",
-        "revision" : "9c08fdb797fd9ef2e3a2b195d6b9ff1222bd3ec7"
+        "revision" : "d42984d0242ef818c92d0d562dc7c12d0eee41b7"
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
