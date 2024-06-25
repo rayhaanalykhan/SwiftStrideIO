@@ -26,6 +26,7 @@ public class SwiftStrideIO {
         
         // Generates a unique cache key using the URL and encryption type.
         guard let cacheKey = url.absoluteString.encrypt(keyEncryption) else {
+            print("SwiftStrideIO -> Error: Couldn't generate unique cache key using the URL: \(url)")
             completion?(nil)
             return
         }
@@ -40,7 +41,8 @@ public class SwiftStrideIO {
     ///   - completion: Optional closure called with the cached URL if successful.
     public static func cacheData(data: Data?, cacheKey: String, completion: ((_ cacheUrl: URL?) -> Void)? = nil) {
         
-        guard let data = data else {
+        guard let data else {
+            print("SwiftStrideIO -> Error: Data is nil")
             completion?(nil)
             return
         }
@@ -57,7 +59,7 @@ public class SwiftStrideIO {
                     completion?(destinationUrl)
                 }
             } catch {
-                print("Error writing data: \(error.localizedDescription)")
+                print("SwiftStrideIO -> Error: Couldn't write data: \(error.localizedDescription)")
                 DispatchQueue.main.async {
                     completion?(nil)
                 }
@@ -74,6 +76,7 @@ public class SwiftStrideIO {
         
         // Generate a key for looking up the cached data.
         guard let cacheKey = url.absoluteString.encrypt(keyEncryption) else {
+            print("SwiftStrideIO -> Error: Couldn't generate unique cache key using the URL: \(url)")
             completion(nil, nil)
             return
         }
@@ -102,7 +105,7 @@ public class SwiftStrideIO {
                 
             } catch {
                 
-                print("Error reading data: \(error.localizedDescription)")
+                print("SwiftStrideIO -> Error: Couldn't read data: \(error.localizedDescription)")
                 DispatchQueue.main.async {
                     completion(nil, nil)
                 }
@@ -118,14 +121,14 @@ public class SwiftStrideIO {
     public static func getData(with urlString: String?, baseUrlString: String?, completion: @escaping (_ data: Data?, _ localUrl: URL?) -> Void) {
         
         guard let urlString else {
+            print("SwiftStrideIO -> Error: Missing URL string")
             completion(nil, nil)
-            print("Missing URL string")
             return
         }
         
         guard let url = URL(string: "\(baseUrlString ?? "")\(urlString)") else {
+            print("SwiftStrideIO -> Error: Invalid URL: \(baseUrlString ?? "")\(urlString)")
             completion(nil, nil)
-            print("Invalid URL")
             return
         }
         
@@ -158,14 +161,14 @@ public class SwiftStrideIO {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 
                 if let error {
+                    print("SwiftStrideIO -> Error: Data couldn't be fetched: \(error)")
                     completion(nil, nil)
-                    print("Error fetching data: \(error)")
                     return
                 }
                 
                 guard let data else {
+                    print("SwiftStrideIO -> Error: No data received")
                     completion(nil, nil)
-                    print("No data received")
                     return
                 }
                 
@@ -192,7 +195,7 @@ public class SwiftStrideIO {
                 
             } catch {
                 
-                print("Error reading data: \(error.localizedDescription)")
+                print("SwiftStrideIO -> Error: Couldn't read data: \(error.localizedDescription)")
                 
                 completion(nil)
             }
