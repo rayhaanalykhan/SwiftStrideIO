@@ -13,8 +13,21 @@ public class SwiftStrideIO {
     
     private init() { }
     
-    // Defines the default encryption method to create cache keys for the stored data.
-    public static var defaultKeyEncryption: String.Encryption = .SHA1
+    // Synchronization queue to handle thread-safe access to the class methods and properties.
+    private static let queue = DispatchQueue(label: "com.swiftstrideio.queue", attributes: .concurrent)
+
+    // Define a static property for defaultKeyEncryption with thread-safe access
+    // We will use read and write barriers for thread-safe access to this variable
+    private static var _defaultKeyEncryption: String.Encryption = .SHA1
+    
+    public static var defaultKeyEncryption: String.Encryption {
+        get {
+            return queue.sync { _defaultKeyEncryption }
+        }
+        set {
+            queue.async(flags: .barrier) { _defaultKeyEncryption = newValue }
+        }
+    }
     
     /// Cache data asynchronously to the disk by generating a cache key from a URL.
     /// - Parameters:
