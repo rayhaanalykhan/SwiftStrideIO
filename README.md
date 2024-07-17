@@ -29,15 +29,7 @@ By installing SwiftStrideIO using above instructions, you will also automaticall
 
 To use SwiftStrideIO in your project, you can call its static methods directly:
 
-1. **Default Encryption for Key:**
-
-    Set a default encryption type for key using as follows:
-
-    ```swift
-    SwiftStrideIO.defaultKeyEncryption = .SHA1
-    ```
-
-2. **Caching Data:**
+1. **Caching Data:**
 
     To cache data from a URL, use the `cacheData` method:
 
@@ -65,7 +57,7 @@ To use SwiftStrideIO in your project, you can call its static methods directly:
     SwiftStrideIO.cacheData(data: Data(), cacheKey: "someKey") { cacheUrl in }
     ```
 
-3. **Retrieving Cached Data:**
+2. **Retrieving Cached Data:**
 
     To retrieve data from cache, use the `getCachedData` method:
 
@@ -82,7 +74,7 @@ To use SwiftStrideIO in your project, you can call its static methods directly:
     }
     ```
 
-4. **Fetching Data:**
+3. **Fetching Data:**
 
     To retrieve data from a local URL or to <strong>retrieve and cache data</strong> from server url, use the `getData` method:
    
