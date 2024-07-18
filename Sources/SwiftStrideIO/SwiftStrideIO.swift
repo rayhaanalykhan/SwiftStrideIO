@@ -142,6 +142,7 @@ public class SwiftStrideIO {
     /// - Parameters:
     ///   - url: Server or local url
     ///   - baseUrlString: Optional base URL to be combined with urlString.
+    ///   - keyEncryption: The type of encryption used for creating the cache key (default is `.SHA1`).
     ///   - completion: Closure called with the data and file URL if retrieval is successful.
     ///   
     public static func getData(from url: URL, keyEncryption: String.Encryption = .SHA1, completion: @escaping @Sendable (_ data: Data?, _ localUrl: URL?) -> Void) {
