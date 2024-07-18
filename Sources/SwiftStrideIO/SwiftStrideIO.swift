@@ -121,7 +121,7 @@ public class SwiftStrideIO {
     ///   - baseUrlString: Optional base URL to be combined with urlString.
     ///   - completion: Closure called with the data and file URL if retrieval is successful.
     ///
-    public static func getData(with urlString: String?, baseUrlString: String?, completion: @escaping @Sendable (_ data: Data?, _ localUrl: URL?) -> Void) {
+    public static func getData(with urlString: String?, baseUrlString: String?, keyEncryption: String.Encryption = .SHA1, completion: @escaping @Sendable (_ data: Data?, _ localUrl: URL?) -> Void) {
         
         guard let urlString else {
             print("SwiftStrideIO -> Error: Missing URL string")
@@ -135,7 +135,7 @@ public class SwiftStrideIO {
             return
         }
         
-        getData(from: url, completion: completion)
+        getData(from: url, keyEncryption: keyEncryption, completion: completion)
     }
     
     /// Fetches data from a URL string or local directory, which can be optionally combined with a base URL.
@@ -144,7 +144,7 @@ public class SwiftStrideIO {
     ///   - baseUrlString: Optional base URL to be combined with urlString.
     ///   - completion: Closure called with the data and file URL if retrieval is successful.
     ///   
-    public static func getData(from url: URL, completion: @escaping @Sendable (_ data: Data?, _ localUrl: URL?) -> Void) {
+    public static func getData(from url: URL, keyEncryption: String.Encryption = .SHA1, completion: @escaping @Sendable (_ data: Data?, _ localUrl: URL?) -> Void) {
         
         if url.isFileURL {
             
@@ -155,7 +155,7 @@ public class SwiftStrideIO {
             return
         }
         
-        getCachedData(from: url) { data, cacheUrl  in
+        getCachedData(from: url, keyEncryption: keyEncryption) { data, cacheUrl  in
             
             if data != nil {
                 completion(data, cacheUrl)
@@ -176,7 +176,7 @@ public class SwiftStrideIO {
                     return
                 }
                 
-                self.cacheData(data: data, url: url) { cacheUrl in
+                self.cacheData(data: data, url: url, keyEncryption: keyEncryption) { cacheUrl in
                     completion(data, cacheUrl)
                 }
                 
