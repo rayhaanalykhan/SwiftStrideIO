@@ -29,43 +29,41 @@ By installing SwiftStrideIO using above instructions, you will also automaticall
 
 To use SwiftStrideIO in your project, you can call its static methods directly:
 
-1. **Default Encryption for Key:**
-
-    Set a default encryption type for key using as follows:
-
-    ```swift
-    SwiftStrideIO.defaultKeyEncryption = .SHA1
-    ```
-
-2. **Caching Data:**
+1. **Caching Data:**
 
     To cache data from a URL, use the `cacheData` method:
 
     ```swift
-    // replace Data() with your Data
+    // replace Data() with your actual Data
     SwiftStrideIO.cacheData(data: Data(), url: URL(string: "https://www.someurl.com/dummy")!)
     ```
     Handle cache url if needed
 
     ```swift
-    // replace Data() with your Data
+    // replace Data() with your actual Data
     SwiftStrideIO.cacheData(data: Data(), url: URL(string: "https://www.someurl.com/dummy")!) { cacheUrl in }
     ```
-
+    Usage with encryption key specified (default is SHA1)
+    
+    ```swift
+    // Replace Data() with your actual data
+    SwiftStrideIO.cacheData(data: Data(), url: URL(string: "https://www.someurl.com/dummy")!, keyEncryption: .SHA224) { cacheUrl in }
+    ```
+    
     Similary cache data using your own key
 
     ```swift
-    // replace Data() with your Data
+    // replace Data() with your actual Data
     SwiftStrideIO.cacheData(data: Data(), cacheKey: "someKey")
     ```
     Handle cache url if needed
 
     ```swift
-    // replace Data() with your Data
+    // replace Data() with your actual Data
     SwiftStrideIO.cacheData(data: Data(), cacheKey: "someKey") { cacheUrl in }
     ```
 
-3. **Retrieving Cached Data:**
+2. **Retrieving Cached Data:**
 
     To retrieve data from cache, use the `getCachedData` method:
 
@@ -74,6 +72,14 @@ To use SwiftStrideIO in your project, you can call its static methods directly:
         // Use the retrieved data from cache or use/pass cache url
     }
     ```
+   Usage with encryption key specified (default is SHA1)
+    
+    ```swift
+    SwiftStrideIO.getCachedData(from: URL(string: "https://www.someurl.com/dummy")!, keyEncryption: .SHA224) { cacheUrl in
+        // Use the retrieved data from cache or use/pass cache url
+    }
+    ```
+    
     Or use a cache key to retrieve data
 
     ```swift
@@ -82,7 +88,7 @@ To use SwiftStrideIO in your project, you can call its static methods directly:
     }
     ```
 
-4. **Fetching Data:**
+3. **Fetching Data:**
 
     To retrieve data from a local URL or to <strong>retrieve and cache data</strong> from server url, use the `getData` method:
    
@@ -95,6 +101,13 @@ To use SwiftStrideIO in your project, you can call its static methods directly:
     ```swift
     SwiftStrideIO.getData(with: "path/or/url", baseUrlString: "optional/baseUrl") { (data, localUrl) in
         // Process the fetched data
+    }
+    ```
+   Usage with encryption key specified (default is SHA1)
+    
+    ```swift
+    SwiftStrideIO.getData(with: "path/or/url", baseUrlString: "optional/baseUrl", keyEncryption: .SHA224) { cacheUrl in
+        // Use the retrieved data from cache or use/pass cache url
     }
     ```
 
