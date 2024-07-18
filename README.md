@@ -47,9 +47,7 @@ To use SwiftStrideIO in your project, you can call its static methods directly:
     
     ```swift
     // Replace Data() with your actual data
-    SwiftStrideIO.cacheData(data: Data(), url: URL(string: "https://www.someurl.com/dummy")!, keyEncryption: .SHA224) { cacheUrl in
-    // Handle cache URL if needed
-    }
+    SwiftStrideIO.cacheData(data: Data(), url: URL(string: "https://www.someurl.com/dummy")!, keyEncryption: .SHA224) { cacheUrl in }
     ```
     
     Similary cache data using your own key
