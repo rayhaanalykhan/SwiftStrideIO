@@ -97,6 +97,14 @@ To use SwiftStrideIO in your project, you can call its static methods directly:
         // Process the fetched data
     }
     ```
+   Usage with encryption key specified (default is SHA1)
+    
+    ```swift
+    SwiftStrideIO.getData(from: URL(string: "https://www.someurl.com/dummy")!, keyEncryption: .SHA224) { (data, localUrl) in
+        // Process the fetched data
+    }
+    ```
+    
     Alternatively you can use a string url with optional base url string parameter
     ```swift
     SwiftStrideIO.getData(with: "path/or/url", baseUrlString: "optional/baseUrl") { (data, localUrl) in
