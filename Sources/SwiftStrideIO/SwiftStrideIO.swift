@@ -30,10 +30,16 @@ public class SwiftStrideIO {
         
         // Generates a unique cache key using the URL and encryption type.
         guard let cacheKey = url.absoluteString.encrypt(keyEncryption) else {
+            
             print("SwiftStrideIO -> Error: Couldn't generate unique cache key using the URL: \(url)")
-            completion(nil)
+            
+            DispatchQueue.main.async {
+                completion(nil)
+            }
+            
             return
         }
+        
         // Cache the data using the generated key and call the completion handler.
         cacheData(data: data, cacheKey: cacheKey + "." + url.pathExtension, completion: completion)
     }
@@ -48,8 +54,13 @@ public class SwiftStrideIO {
     public static func cacheData(data: Data?, cacheKey: String, completion: @escaping (_ cacheUrl: URL?) -> Void = { _ in }) {
 
         guard let data else {
+            
             print("SwiftStrideIO -> Error: Data is nil")
-            completion(nil)
+            
+            DispatchQueue.main.async {
+                completion(nil)
+            }
+            
             return
         }
         
@@ -57,15 +68,25 @@ public class SwiftStrideIO {
             
             do {
                 let cachesDirectory = try FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                let destinationUrl = cachesDirectory.appendingPathComponent(cacheKey)
+                
+                let folderUrl = cachesDirectory.appendingPathComponent("SwiftStrideIO")
+                
+                if !FileManager.default.fileExists(atPath: folderUrl.path) {
+                    try FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true, attributes: nil)
+                }
+                
+                let destinationUrl = folderUrl.appendingPathComponent(cacheKey)
                 
                 try data.write(to: destinationUrl, options: .atomic)
                 
                 DispatchQueue.main.async {
                     completion(destinationUrl)
                 }
+                
             } catch {
+                
                 print("SwiftStrideIO -> Error: Couldn't write data: \(error.localizedDescription)")
+                
                 DispatchQueue.main.async {
                     completion(nil)
                 }
@@ -86,10 +107,16 @@ public class SwiftStrideIO {
         
         // Generate a key for looking up the cached data.
         guard let cacheKey = url.absoluteString.encrypt(keyEncryption) else {
+            
             print("SwiftStrideIO -> Error: Couldn't generate unique cache key using the URL: \(url)")
-            completion(nil, nil)
+            
+            DispatchQueue.main.async {
+                completion(nil, nil)
+            }
+            
             return
         }
+        
         // Retrieve cached data using the generated cache key and original file extension.
         getCachedData(cacheKey: cacheKey + "." + url.pathExtension, completion: completion)
     }
@@ -107,7 +134,14 @@ public class SwiftStrideIO {
             do {
                 
                 let cachesDirectory = try FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                let sourceUrl = cachesDirectory.appendingPathComponent(cacheKey)
+                
+                let folderUrl = cachesDirectory.appendingPathComponent("SwiftStrideIO")
+                
+                if !FileManager.default.fileExists(atPath: folderUrl.path) {
+                    try FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true, attributes: nil)
+                }
+                
+                let sourceUrl = folderUrl.appendingPathComponent(cacheKey)
                 
                 let data = try Data(contentsOf: sourceUrl)
                 
@@ -118,6 +152,7 @@ public class SwiftStrideIO {
             } catch {
                 
                 print("SwiftStrideIO -> Error: Couldn't read data: \(error.localizedDescription)")
+                
                 DispatchQueue.main.async {
                     completion(nil, nil)
                 }
@@ -138,14 +173,24 @@ public class SwiftStrideIO {
     public static func getData(with urlString: String?, baseUrlString: String?, keyEncryption: String.Encryption = defaultKeyEncryption, completion: @escaping (_ data: Data?, _ localUrl: URL?) -> Void) {
         
         guard let urlString else {
+            
             print("SwiftStrideIO -> Error: Missing URL string")
-            completion(nil, nil)
+            
+            DispatchQueue.main.async {
+                completion(nil, nil)
+            }
+            
             return
         }
         
         guard let url = URL(string: "\(baseUrlString ?? "")\(urlString)") else {
+            
             print("SwiftStrideIO -> Error: Invalid URL: \(baseUrlString ?? "")\(urlString)")
-            completion(nil, nil)
+            
+            DispatchQueue.main.async {
+                completion(nil, nil)
+            }
+            
             return
         }
         
@@ -167,7 +212,10 @@ public class SwiftStrideIO {
         if url.isFileURL {
             
             getLocalData(from: url) { data in
-                completion(data, url)
+                
+                DispatchQueue.main.async {
+                    completion(data, url)
+                }
             }
             
             return
@@ -176,29 +224,75 @@ public class SwiftStrideIO {
         getCachedData(from: url, keyEncryption: keyEncryption) { data, cacheUrl  in
             
             if data != nil {
-                completion(data, cacheUrl)
+                
+                DispatchQueue.main.async {
+                    completion(data, cacheUrl)
+                }
+                
                 return
             }
             
             URLSession.shared.dataTask(with: url) { data, response, error in
                 
                 if let error {
+                    
                     print("SwiftStrideIO -> Error: Data couldn't be fetched: \(error)")
-                    completion(nil, nil)
+                    
+                    DispatchQueue.main.async {
+                        completion(nil, nil)
+                    }
+                    
                     return
                 }
                 
                 guard let data else {
+                    
                     print("SwiftStrideIO -> Error: No data received")
-                    completion(nil, nil)
+                    
+                    DispatchQueue.main.async {
+                        completion(nil, nil)
+                    }
+                    
                     return
                 }
                 
                 self.cacheData(data: data, url: url, keyEncryption: keyEncryption) { cacheUrl in
-                    completion(data, cacheUrl)
+                    
+                    DispatchQueue.main.async {
+                        completion(data, cacheUrl)
+                    }
                 }
                 
             }.resume()
+        }
+    }
+    
+    /// Clears all the cache files stored by this package
+    ///
+    /// Clears the cache by deleting and recreating the `SwiftStrideIO` folder in the cache directory.
+    ///
+    public static func clearCache() {
+        
+        DispatchQueue.global(qos: .background).async {
+            
+            do {
+                
+                let cachesDirectory = try FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                
+                let folderUrl = cachesDirectory.appendingPathComponent("SwiftStrideIO")
+                
+                // Attempt to remove the folder and its contents, catching any error if it doesn't exist
+                try FileManager.default.removeItem(at: folderUrl)
+                
+                // Create the folder again
+                try FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true, attributes: nil)
+                
+                print("SwiftStrideIO -> Success: All cache cleared")
+                
+            } catch {
+                
+                print("SwiftStrideIO -> Error: Couldn't clear cache: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -219,7 +313,9 @@ public class SwiftStrideIO {
                 
                 print("SwiftStrideIO -> Error: Couldn't read data: \(error.localizedDescription)")
                 
-                completion(nil)
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
             }
         }
     }
