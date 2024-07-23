@@ -10,6 +10,7 @@ A Swift library for easy caching and retrieval of data from URLs, featuring auto
 - Fetch data with ease, regardless of whether the URL points to a local or remote resource.
 - Automatically cache data while retrieving data from server.
 - Option to cache and retrieve data using your own (unique) identifier.
+- Easily clear all cached files.
 
 ## Installation
 
@@ -117,6 +118,14 @@ To use SwiftStrideIO in your project, you can call its static methods directly:
     SwiftStrideIO.getData(with: "path/or/url", baseUrlString: "optional/baseUrl", keyEncryption: .SHA224) { cacheUrl in
         // Use the retrieved data from cache or use/pass cache url
     }
+    ```
+    
+4. **Clearing Cache:**
+
+    To clear all cached files, use the `clearCache` method:
+
+    ```swift
+    SwiftStrideIO.clearCache()
     ```
 
 
